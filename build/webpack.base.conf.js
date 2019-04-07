@@ -103,7 +103,8 @@ const configExports = {
       }, {
         test: /\.(js|jsx)$/,
         // 把对.js 的文件处理交给id为happyBabel 的HappyPack 的实例执行
-        loader: 'happypack/loader?id=happyBabel',
+        // loader: 'happypack/loader?id=happyBabel',
+        loader: 'babel-loader',
         // 排除node_modules 目录下的文件
         exclude: /node_modules/,
       }, {
