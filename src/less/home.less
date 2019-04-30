@@ -2,3 +2,23 @@
   background: gray;
   color: #fff;
 }
+
+.number {
+  font-size: 30px;
+  opacity: 1;
+  // animation: showNumber 1s infinite ease-in-out;
+}
+.fade-appear {
+  animation: showNumber 1s forwards;
+}
+.fade-exit {
+  animation: hideNumber 1s forwards;
+}
+@keyframes showNumber {
+  0% {opacity: 0; color:red;}
+  100% {opacity: 1; color: green;}
+}
+@keyframes hideNumber {
+  0% {opacity: 1; color:green;}
+  100% {opacity: 0; color: red;}
+}

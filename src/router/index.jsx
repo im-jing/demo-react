@@ -14,17 +14,13 @@ class Main extends React.Component {
   }
 
   render() {
-    const HomePage = (props) => {
-      return (
-        <Home {...props} />
-      );
-    };
+    const HomePage = props => (
+      <Home {...props} />
+    );
 
-    const AboutPage = (props) => {
-      return (
-        <About {...props} />
-      );
-    };
+    const AboutPage = props => (
+      <About {...props} />
+    );
 
     return (
       <Router>

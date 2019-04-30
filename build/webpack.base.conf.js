@@ -1,17 +1,13 @@
 const fs = require('fs');
 const glob = require('glob');
-// const path = require('path');
-// const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
-// const TransferWebpackPlugin = require('transfer-webpack-plugin');
-// const autoprefixer = require('autoprefixer');
 const HappyPack = require('happypack');
 const os = require('os');
+
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 const isProduction = process.env.NODE_ENV === 'production';
-
 const publicConf = require('../config/public.conf');
 
 const srcPath = './src';
@@ -43,7 +39,7 @@ entryJs.forEach((fileName) => {
   try {
     fs.accessSync(tplName, fs.F_OK);
   } catch (err) {
-    tplName = `${templatePath}default.html`;
+    tplName = `${templatePath}default.ejs`;
   }
 
   // 多entry打包生成对应名字html
@@ -184,7 +180,7 @@ const configExports = {
       threadPool: happyThreadPool,
       // 允许 HappyPack 输出日志
       verbose: true,
-    })
+    }),
   ].concat(pages),
 };
 
