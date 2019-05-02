@@ -12,7 +12,7 @@ const basewebpackConfig = require('./webpack.base.conf');
 
 const prodWebpackConfig = merge(basewebpackConfig, {
   mode: 'production',
-  devtool: 'source-map',
+  devtool: 'cheap-module-source-map',
   plugins: [
     new webpack.DefinePlugin({
       'process.env': require('../config/prod.env'),

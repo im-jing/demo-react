@@ -26,14 +26,20 @@ const ENV_CONF = {
   dev: {
     clear: true,
     compress: false,
+    SERVER_API_BASEURL: 'http://tv-dashboard.wework.cn',
   },
   // prod
   prod: {
     clear: false,
     compress: true,
+    SERVER_API_BASEURL: 'http://tv-dashboard.wework.cn',
   },
 };
 /* === config end === */
 
 // module.exports
-module.exports = Object.assign({}, COMMON_CONF, ENV_CONF[APP_ENV]);
+module.exports = Object.assign(
+  {},
+  COMMON_CONF,
+  ENV_CONF[APP_ENV],
+);

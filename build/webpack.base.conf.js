@@ -72,8 +72,6 @@ const configExports = {
 
   entry: entries,
 
-  mode: 'development',
-
   output: {
     path: publicConf.distPath,
     publicPath: publicConf.publicPath,

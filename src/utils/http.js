@@ -16,7 +16,7 @@ export const checkStatus = (res) => {
 };
 
 /* fetch add timeout property */
-export const fetchTimeout = (fetchPromise, timeout) => {
+export const fetchWithTimeout = (fetchPromise, timeout) => {
   let abortFn = null;
 
   // 这是一个可以被reject的promise
@@ -81,7 +81,7 @@ const fetchApi = (url, body, method, type) => {
   };
 
 
-  fetchTimeout(fetch(url, myInit), timeout)
+  fetchWithTimeout(fetch(url, myInit), timeout)
     .then(res => res.json())
     .catch(error => console.error('Error:', error))
     .then(response => console.log('Success:', response));

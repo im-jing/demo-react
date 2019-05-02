@@ -1,7 +1,7 @@
 module.exports = {
   "extends": "airbnb",
   "globals": {
-    // "fetch": false
+    "SERVER_API_BASEURL": true,
   },
   "rules": {
     "global-require": 0,
