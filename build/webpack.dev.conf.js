@@ -8,6 +8,9 @@ const devWebpackConfig = merge(basewebpackConfig, {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
   ],
+  optimization: {
+    usedExports: true,
+  },
 });
 
 module.exports = devWebpackConfig;

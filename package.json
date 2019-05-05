@@ -1,5 +1,8 @@
 {
   "name": "my-demo",
+  "sideEffects": [
+    "*.css"
+  ],
   "version": "1.0.0",
   "description": "demo",
   "main": "index.js",

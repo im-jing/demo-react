@@ -151,7 +151,7 @@ const configExports = {
         react: {
           test: reVendorReact,
           priority: 0,
-          name: 'vendor-rect',
+          name: 'vendor-react',
         },
         core: {
           test: reVendorCore,
