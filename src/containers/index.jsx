@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+// import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import {
   getLocations,
-  getReservations,
-  getFeedList,
+  // getReservations,
+  // getFeedList,
 } from '../request/api';
 
 const Section = styled.section`
@@ -20,6 +21,7 @@ class Home extends Component {
     super(props);
 
     this.state = {};
+    this.sendRequest = null;
   }
 
   // static getDerivedStateFromProps(props, state) {
@@ -27,17 +29,23 @@ class Home extends Component {
   // }
 
   componentDidMount() {
-    getLocations();
-    getReservations({ name: 'aaa', title: 'manager' });
+    this.sendRequest = getLocations();
+    // getReservations({ name: 'aaa', title: 'manager' });
 
-    const paramsRole = {
-      page: 1,
-      size: 1,
-    };
-    getFeedList(paramsRole);
+    // const paramsRole = {
+    //   page: 1,
+    //   size: 1,
+    // };
+    // getFeedList(paramsRole);
   }
 
-  // linkToAbout() {
+  componentWillUnmount() {
+    // abortFetching();
+    console.log('Fetch abort');
+    this.sendRequest.abort();
+  }
+
+  // switchToAbout = () => {
   //   this.props.history.push('about');
   // }
 
@@ -48,8 +56,7 @@ class Home extends Component {
         <Section red>aaa</Section>
         <Section>bbb</Section>
         <Section2 red>ccc</Section2>
-        <button type="button">link to About page</button>
-
+        <span>link to About page</span>
       </div>
     );
   }
