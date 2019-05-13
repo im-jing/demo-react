@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import '../less/about.less';
+import { getReservations } from '../request/api';
 
 const classNames = require('classnames');
 
@@ -19,15 +21,9 @@ class About extends Component {
   }
 
   componentDidMount() {
-    setInterval(() => {
-      this.setState({
-        update: true,
-      });
-    }, 2000);
-  }
-
-  shouldComponentUpdate() {
-
+    getReservations().then((res) => {
+      console.log(res, 'getReservations');
+    });
   }
 
   render() {
@@ -41,6 +37,7 @@ class About extends Component {
         >
           aaa
         </div>
+        <Link to="/">index page</Link>
       </div>
     );
   }

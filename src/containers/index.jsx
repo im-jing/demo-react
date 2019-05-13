@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import {
@@ -30,6 +30,10 @@ class Home extends Component {
 
   componentDidMount() {
     this.sendRequest = getLocations();
+    this.sendRequest.then((res) => {
+      console.log(res, '==res==');
+    });
+    console.log(this.sendRequest, 'this.sendRequest');
     // getReservations({ name: 'aaa', title: 'manager' });
 
     // const paramsRole = {
@@ -56,7 +60,7 @@ class Home extends Component {
         <Section red>aaa</Section>
         <Section>bbb</Section>
         <Section2 red>ccc</Section2>
-        <span>link to About page</span>
+        <Link to="/about">about link</Link>
       </div>
     );
   }

@@ -23,20 +23,16 @@ const fetchRequst = (fetchPromise, timeout, cancel) => {
   let timeoutFn = null;
 
   // timeout Promise
-  const timeoutPromise = new Promise((resolve, reject) => {
+  const timeoutPromise = new Promise((reject) => {
     timeoutFn = () => {
       cancel();
       reject(new Error('网络请求超时'));
     };
   });
 
-
   // 这是一个可以被reject的promise
   const abortPromise = new Promise((resolve, reject) => {
-    console.log('==abortPromise==');
     abortFn = () => {
-      console.log('abortFn');
-      // abort Function
       cancel();
       reject(new Error('abort promise'));
     };
@@ -50,9 +46,7 @@ const fetchRequst = (fetchPromise, timeout, cancel) => {
   ]);
 
   // 计时器设置超时
-  setTimeout(() => {
-    timeoutFn();
-  }, timeout);
+  setTimeout(timeoutFn, timeout);
 
   // 给abortablePromise增加一个abort方法
   abortablePromise.abort = abortFn;
@@ -63,7 +57,7 @@ const fetchRequst = (fetchPromise, timeout, cancel) => {
 /* fetch请求封装 */
 const fetchApi = (url, body, method, type) => {
   // 设置超时时间
-  const timeout = 10;
+  const timeout = 10000;
   // 设置不同type的contentType
   const contentType = type === 'json'
     ? { 'Content-Type': 'application/json;charset=UTF-8' }
@@ -110,14 +104,9 @@ const fetchApi = (url, body, method, type) => {
   };
 
   const fetchPromise = new Promise((resolve, reject) => {
-    console.log('==fetchPromise==');
     fetch(url, myInit)
-      .then(
-        res => res.json(),
-        err => console.log(err),
-      )
-      .catch(error => console.error('Error:', error))
-      .then(response => console.log('Success:', response));
+      .then(res => resolve(res.json()))
+      .catch(error => reject(error));
   });
   return fetchRequst(fetchPromise, timeout, cancel);
 };
