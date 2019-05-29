@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+
+import { Tabs, Tab } from '../components/tabs/index';
 
 import {
   getLocations,
@@ -17,10 +20,19 @@ const Section2 = styled(Section)`
   border-color: black;
 `;
 class Home extends Component {
+  static propTypes = {
+    history: PropTypes.shape({
+      pathname: PropTypes.string.isRequired,
+    }).isRequired,
+  }
+
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      sum: 0,
+      activeTabIdx: 0,
+    };
     this.sendRequest = null;
   }
 
@@ -41,6 +53,11 @@ class Home extends Component {
     //   size: 1,
     // };
     // getFeedList(paramsRole);
+
+    const sum = this.plus(2, 5);
+    this.setState({
+      sum,
+    });
   }
 
   componentWillUnmount() {
@@ -49,18 +66,31 @@ class Home extends Component {
     this.sendRequest.abort();
   }
 
-  // switchToAbout = () => {
-  //   this.props.history.push('about');
-  // }
+  plus = (a, b) => a + b
+
+  switchToAbout = () => {
+    const { history } = this.props;
+    history.push('about');
+  }
 
   render() {
+    const { sum, activeTabIdx } = this.state;
+
     return (
       <div className="page-home">
         <div>here is test 123.</div>
-        <Section red>aaa</Section>
+        <Section red>{sum}</Section>
         <Section>bbb</Section>
         <Section2 red>ccc</Section2>
         <Link to="/about">about link</Link>
+        <Tabs activeTabIdx={activeTabIdx}>
+          <Tab name="Tab A">
+            <p>aaa</p>
+          </Tab>
+          <Tab name="Tab B">
+            <p>bbb</p>
+          </Tab>
+        </Tabs>
       </div>
     );
   }
