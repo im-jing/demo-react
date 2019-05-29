@@ -8,12 +8,7 @@
     ],
     "@babel/preset-react"
   ],
-  "plugins": [
-    [
-      "@babel/plugin-proposal-class-properties",
-      "@babel/plugin-transform-runtime"
-    ]
-  ],
+  "plugins": ["@babel/plugin-proposal-class-properties"],
   "env": {
     "test": {
       "presets": ["react", "stage-2"]
