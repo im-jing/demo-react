@@ -40,8 +40,8 @@ class Home extends Component {
   //   console.log('getDerivedStateFromProps')
   // }
 
-  componentDidMount() {
-    this.sendRequest = getLocations();
+  async componentDidMount() {
+    this.sendRequest = await getLocations();
     this.sendRequest.then((res) => {
       console.log(res, '==res==');
     });

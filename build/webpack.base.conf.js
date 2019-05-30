@@ -1,5 +1,6 @@
 const fs = require('fs');
 const glob = require('glob');
+const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
@@ -81,6 +82,9 @@ const configExports = {
 
   resolve: {
     extensions: ['.js', '.jsx', '.less', '.css'], // 自动解析确定的扩展,能够使用户在引入模块时不带扩展名
+    alias: {
+      '@': path.resolve(__dirname, '../src'),
+    },
   },
 
   externals: {},

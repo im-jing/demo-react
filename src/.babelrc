@@ -1,17 +1,16 @@
 {
   "presets": [
+    "@babel/preset-react",
     [
       "@babel/preset-env",
       {
         "useBuiltIns": "usage"
       }
-    ],
-    "@babel/preset-react"
+    ]
   ],
-  "plugins": ["@babel/plugin-proposal-class-properties"],
-  "env": {
-    "test": {
-      "presets": ["react", "stage-2"]
-    }
-  }
+  "plugins": [
+    ["@babel/plugin-transform-runtime", { "corejs": 2 }],
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    ["@babel/plugin-proposal-class-properties"]
+  ]
 }
