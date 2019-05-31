@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tabs render the tabs to match the snapshot 1`] = `
+<Fragment>
+  <ul
+    className="tabs"
+  >
+    <li
+      key=".0"
+    >
+      <button
+        className="tab-item active"
+        onClick={[Function]}
+        type="button"
+      />
+    </li>
+    <li
+      key=".1"
+    >
+      <button
+        className="tab-item"
+        onClick={[Function]}
+        type="button"
+      />
+    </li>
+  </ul>
+  <div
+    className="tabs-content"
+  >
+    aaaa
+  </div>
+</Fragment>
+`;

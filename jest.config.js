@@ -34,16 +34,23 @@ module.exports = {
     '**/?(*.)+(spec|test).[tj]s?(x)',
   ],
 
+  // 将js,jsx后缀的文件使用babel-jest处理
   transform: {
     '^.+\\.(js|jsx)$': 'babel-jest',
   },
 
+  // transformIgnorePatterns: ['<rootDir>/node_modules/'],
+
   // 根据文件后缀，mock掉图片模块、样式模块等不需要处理的模块
   moduleNameMapper: {
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': '<rootDir>/test/__mocks__/fileMock.js',
-    '\\.(css|less)$': 'identity-obj-proxy',
-    // '^@/(.*)': '<rootDir>/src/$1',
+    '\\.(css|less|scss)$': 'identity-obj-proxy',
+    '^@/(.*)': '<rootDir>/src/$1',
   },
+
+  moduleDirectories: [
+    'node_modules',
+  ],
 
   snapshotSerializers: ['enzyme-to-json/serializer'],
 

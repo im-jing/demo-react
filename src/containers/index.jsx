@@ -20,11 +20,11 @@ const Section2 = styled(Section)`
   border-color: black;
 `;
 class Home extends Component {
-  static propTypes = {
-    history: PropTypes.shape({
-      pathname: PropTypes.string.isRequired,
-    }).isRequired,
-  }
+  // static propTypes = {
+  //   history: PropTypes.shape({
+  //     pathname: PropTypes.string.isRequired,
+  //   }).isRequired,
+  // }
 
   constructor(props) {
     super(props);
@@ -42,10 +42,10 @@ class Home extends Component {
 
   async componentDidMount() {
     this.sendRequest = await getLocations();
-    this.sendRequest.then((res) => {
-      console.log(res, '==res==');
-    });
-    console.log(this.sendRequest, 'this.sendRequest');
+    // this.sendRequest.then((res) => {
+    //   console.log(res, '==res==');
+    // });
+    // console.log(this.sendRequest, 'this.sendRequest');
     // getReservations({ name: 'aaa', title: 'manager' });
 
     // const paramsRole = {
@@ -69,8 +69,8 @@ class Home extends Component {
   plus = (a, b) => a + b
 
   switchToAbout = () => {
-    const { history } = this.props;
-    history.push('about');
+    // const { history } = this.props;
+    // history.push('about');
   }
 
   render() {
@@ -89,6 +89,9 @@ class Home extends Component {
           </Tab>
           <Tab name="Tab B">
             <p>bbb</p>
+          </Tab>
+          <Tab name="Tab C">
+            <p>ccc</p>
           </Tab>
         </Tabs>
       </div>
