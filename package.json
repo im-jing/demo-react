@@ -10,7 +10,7 @@
     "build": "webpack",
     "dev": "cross-env NODE_ENV=development APP_ENV=dev webpack-dev-server --env development --colors --hot -w --config build/webpack.dev.conf.js",
     "prod": "cross-env NODE_ENV=production APP_ENV=prod webpack --env production --config build/webpack.prod.conf.js",
-    "test": "jest"
+    "test": "jest --watchAll"
   },
   "author": "nancy.zhao",
   "license": "ISC",

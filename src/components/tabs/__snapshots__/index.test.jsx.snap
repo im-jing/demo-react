@@ -23,6 +23,15 @@ exports[`Tabs render the tabs to match the snapshot 1`] = `
         type="button"
       />
     </li>
+    <li
+      key=".2"
+    >
+      <button
+        className="tab-item"
+        onClick={[Function]}
+        type="button"
+      />
+    </li>
   </ul>
   <div
     className="tabs-content"
