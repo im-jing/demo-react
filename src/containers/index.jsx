@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 
+import Loading from '../components/loading/index';
 import { Tabs, Tab } from '../components/tabs/index';
 
 import {
   getLocations,
   // getReservations,
   // getFeedList,
-} from '../request/api';
+} from '../request/api-axios';
 
 const Section = styled.section`
   background: #f2f2f2;
@@ -30,8 +30,10 @@ class Home extends Component {
     super(props);
 
     this.state = {
+      loading: true,
       sum: 0,
       activeTabIdx: 0,
+      list: [],
     };
     this.sendRequest = null;
   }
@@ -42,10 +44,8 @@ class Home extends Component {
 
   async componentDidMount() {
     this.sendRequest = await getLocations();
-    // this.sendRequest.then((res) => {
-    //   console.log(res, '==res==');
-    // });
-    // console.log(this.sendRequest, 'this.sendRequest');
+
+    console.log(this.sendRequest, 'this.sendRequest');
     // getReservations({ name: 'aaa', title: 'manager' });
 
     // const paramsRole = {
@@ -56,7 +56,9 @@ class Home extends Component {
 
     const sum = this.plus(2, 5);
     this.setState({
+      loading: false,
       sum,
+      list: this.sendRequest.data,
     });
   }
 
@@ -73,28 +75,41 @@ class Home extends Component {
     // history.push('about');
   }
 
+  renderLocationList = () => {
+    const { list } = this.state;
+
+    return list.map(item => <li key={item.name}>{ item.name }</li>);
+  }
+
   render() {
-    const { sum, activeTabIdx } = this.state;
+    const { loading, sum, activeTabIdx } = this.state;
 
     return (
-      <div className="page-home">
-        <div>here is test 123.</div>
-        <Section red>{sum}</Section>
-        <Section>bbb</Section>
-        <Section2 red>ccc</Section2>
-        <Link to="/about">about link</Link>
-        <Tabs activeTabIdx={activeTabIdx}>
-          <Tab name="Tab A">
-            <p>aaa</p>
-          </Tab>
-          <Tab name="Tab B">
-            <p>bbb</p>
-          </Tab>
-          <Tab name="Tab C">
-            <p>ccc</p>
-          </Tab>
-        </Tabs>
-      </div>
+      <React.Fragment>
+        {loading
+          ? <Loading />
+          : (
+            <div className="page-home">
+              <div>here is test 123.</div>
+              <Section red>{sum}</Section>
+              <Section>bbb</Section>
+              <Section2 red>ccc</Section2>
+              <Link to="/about">about link</Link>
+              <Tabs activeTabIdx={activeTabIdx}>
+                <Tab name="Tab A">
+                  <ul>{this.renderLocationList()}</ul>
+                </Tab>
+                <Tab name="Tab B">
+                  <p>bbb</p>
+                </Tab>
+                <Tab name="Tab C">
+                  <p>ccc</p>
+                </Tab>
+              </Tabs>
+            </div>
+          )
+        }
+      </React.Fragment>
     );
   }
 }

@@ -1,12 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 
-import { Tabs, Tab } from './index';
+import { Tabs, Tab } from '../index';
 
 const props = {
   activeTabIdx: 0,
 };
-
 let wrapper;
 
 describe('Tabs', () => {
@@ -29,7 +28,7 @@ describe('Tabs', () => {
     expect(wrapper.children().first().find('li')).toHaveLength(3);
   });
 
-  it('first render the tabs', () => {
+  it('after render the tabs, current tab has active class', () => {
     // console.log(wrapper.debug(), '==wrapper==');
     const tab = wrapper.children().find('.tabs li');
     const tabFirst = tab.at(0);
@@ -39,7 +38,7 @@ describe('Tabs', () => {
     expect(tabFirst.find('button').hasClass('active')).toEqual(true);
     expect(tabSecond.find('button').hasClass('active')).toEqual(false);
     expect(tabThird.find('button').hasClass('active')).toEqual(false);
-    expect(wrapper.state('activeIdx')).toEqual(0);
+    expect(wrapper.state('activeIdx')).toEqual(props.activeTabIdx);
   });
 
   it('simulate click on the second tab', () => {
@@ -50,7 +49,7 @@ describe('Tabs', () => {
       .hasClass('active')).toEqual(false);
     expect(wrapper.children().find('.tabs li').at(1).find('button')
       .hasClass('active')).toEqual(true);
-    expect(wrapper.state('activeIdx')).toEqual(1);
+    // expect(wrapper.state('activeIdx')).toEqual(1);
   });
 
   it('click the second tab, the handleTabClick() should be called', () => {
@@ -65,6 +64,24 @@ describe('Tabs', () => {
     expect(wrapper.instance().handleTabClick).toHaveBeenCalled();
     expect(wrapper.instance().handleTabClick).toHaveBeenCalledWith(wrapper.state('activeIdx'));
   });
+
+  // it('after rendered the page, should execute the renderChildrenTabs()', () => {
+  //   // const spy = jest.spyOn(wrapper.instance(), 'renderChildrenTabs');
+  //   wrapper.instance().renderChildrenTabs = jest.fn();
+
+  //   wrapper.instance().forceUpdate();
+  //   expect(wrapper.instance().renderChildrenTabs).toHaveBeenCalled();
+
+  //   // Restores mocks back to their original value
+  //   // spy.mockRestore();
+  // });
+
+  // it('after rendered the page, should execute the renderTabActiveContent()', () => {
+  //   wrapper.instance().renderTabActiveContent = jest.fn();
+
+  //   wrapper.instance().forceUpdate();
+  //   expect(wrapper.instance().renderTabActiveContent).toHaveBeenCalled();
+  // });
 
   afterAll(() => {
     wrapper.unmount();

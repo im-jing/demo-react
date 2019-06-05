@@ -2,6 +2,10 @@ module.exports = {
   "extends": "airbnb",
   "globals": {
     "SERVER_API_BASEURL": true,
+    "React": true,
+    "shallow": true,
+    "render": true,
+    "mount": true,
   },
   "rules": {
     "global-require": 0,

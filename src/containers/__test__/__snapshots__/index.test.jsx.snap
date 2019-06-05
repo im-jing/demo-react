@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home Page render the Home to match the snapshot 1`] = `
+<div
+  className="page-home"
+>
+  <div>
+    here is test 123.
+  </div>
+  <styled.section
+    red={true}
+  >
+    0
+  </styled.section>
+  <styled.section>
+    bbb
+  </styled.section>
+  <Styled(styled.section)
+    red={true}
+  >
+    ccc
+  </Styled(styled.section)>
+  <Link
+    to="/about"
+  >
+    about link
+  </Link>
+  <Tabs
+    activeTabIdx={0}
+  >
+    <Tab
+      name="Tab A"
+    >
+      <p>
+        aaa
+      </p>
+    </Tab>
+    <Tab
+      name="Tab B"
+    >
+      <p>
+        bbb
+      </p>
+    </Tab>
+    <Tab
+      name="Tab C"
+    >
+      <p>
+        ccc
+      </p>
+    </Tab>
+  </Tabs>
+</div>
+`;

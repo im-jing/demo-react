@@ -46,6 +46,7 @@ export class Tabs extends Component {
     if (children[activeIdx]) {
       return children[activeIdx].props.children;
     }
+    return false;
   }
 
   render() {
