@@ -10,10 +10,10 @@ describe('Home Page', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('should render the tabs component', () => {
-    expect(wrapper.children(Tabs).length).toEqual(1);
-    expect(wrapper.find(Tab).length).toEqual(3);
-  });
+  // it('should render the tabs component', () => {
+  //   expect(wrapper.children(Tabs).length).toEqual(1);
+  //   expect(wrapper.find(Tab).length).toEqual(3);
+  // });
 
   // it('fetch locations api and render the result on mount', (done) => {
   //   const wrapper = shallow(<Home />);

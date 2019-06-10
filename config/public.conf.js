@@ -27,12 +27,14 @@ const ENV_CONF = {
     clear: true,
     compress: false,
     SERVER_API_BASEURL: 'http://tv-dashboard.wework.cn',
+    SERVER_API_BASEURL2: 'https://zuul-ut.nakedhub.com',
   },
   // prod
   prod: {
     clear: false,
     compress: true,
     SERVER_API_BASEURL: 'http://tv-dashboard.wework.cn',
+    SERVER_API_BASEURL2: 'https://api-staging.wework.cn/chinaos',
   },
 };
 /* === config end === */

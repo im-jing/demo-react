@@ -7,6 +7,9 @@ import { Tabs, Tab } from '../components/tabs/index';
 
 import {
   getLocations,
+  getRoleList,
+  addRole,
+  removeRole,
   // getReservations,
   // getFeedList,
 } from '../request/api-axios';
@@ -34,6 +37,7 @@ class Home extends Component {
       sum: 0,
       activeTabIdx: 0,
       list: [],
+      roleList: [],
     };
     this.sendRequest = null;
   }
@@ -45,21 +49,14 @@ class Home extends Component {
   async componentDidMount() {
     this.sendRequest = await getLocations();
 
-    console.log(this.sendRequest, 'this.sendRequest');
-    // getReservations({ name: 'aaa', title: 'manager' });
-
-    // const paramsRole = {
-    //   page: 1,
-    //   size: 1,
-    // };
-    // getFeedList(paramsRole);
-
     const sum = this.plus(2, 5);
     this.setState({
       loading: false,
       sum,
       list: this.sendRequest.data,
     });
+
+    this.getRoleListData();
   }
 
   componentWillUnmount() {
@@ -75,10 +72,73 @@ class Home extends Component {
     // history.push('about');
   }
 
+  getRoleListData = async () => {
+    // 测试发送post请求
+    const getRoleParams = {
+      email: '',
+      page: 1,
+      size: 10,
+    };
+    const roleListData = await getRoleList(getRoleParams);
+
+    this.setState({
+      loading: false,
+      roleList: roleListData.data.data.list,
+    });
+  }
+
   renderLocationList = () => {
     const { list } = this.state;
 
     return list.map(item => <li key={item.name}>{ item.name }</li>);
+  }
+
+  renderRoleList = () => {
+    const { roleList } = this.state;
+
+    return roleList.map((item, idx) => (
+      <tr key={item.id}>
+        <td>{idx + 1}</td>
+        <td>{item.name}</td>
+        <td>{item.email}</td>
+        <td>{item.locationName}</td>
+        <td><button type="button" onClick={() => this.onRemoveRole(item.id)}>Remove</button></td>
+      </tr>
+    ));
+  }
+
+  onAddRole = async () => {
+    const addRoleParams = {
+      email: 'a@a.com',
+      location: 412,
+      name: 'a',
+      roleIds: [7],
+    };
+
+    await addRole(addRoleParams)
+      .then((response) => {
+        console.log(response.data, 'res code');
+        if (response.data.code === 0) {
+          this.getRoleListData();
+        } else {
+          alert(response.data.msg);
+        }
+      });
+  }
+
+  onRemoveRole = async (id) => {
+    const removeRoleParams = {
+      id,
+    };
+
+    await removeRole(removeRoleParams)
+      .then((response) => {
+        if (response.data.code === 0) {
+          this.getRoleListData();
+        } else {
+          alert(response.data.msg);
+        }
+      });
   }
 
   render() {
@@ -100,7 +160,12 @@ class Home extends Component {
                   <ul>{this.renderLocationList()}</ul>
                 </Tab>
                 <Tab name="Tab B">
-                  <p>bbb</p>
+                  <button type="button" onClick={() => this.onAddRole()}>Add</button>
+                  <table>
+                    <tbody>
+                      {this.renderRoleList()}
+                    </tbody>
+                  </table>
                 </Tab>
                 <Tab name="Tab C">
                   <p>ccc</p>
