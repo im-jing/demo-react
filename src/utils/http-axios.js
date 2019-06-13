@@ -5,6 +5,7 @@ const accessToken = 'eyJraWQiOiJFRjRGMjJDMC01Q0IwLTQzNDgtOTY3Qi0wMjY0OTVFN0VGQzg
 
 // axios拦截器
 export const axiosApi = (url, method, type, params = {}) => {
+  // console.log('==enter axiosApi fn==');
   // method为get类型，传参用params，否则用data
   const data = (method === 'GET') ? 'params' : 'data';
   // 一般后台要求传入的是json格式，但是有时候后台要求传入form-data形式
@@ -31,6 +32,7 @@ export const axiosApi = (url, method, type, params = {}) => {
   );
 
   return new Promise((resolve, reject) => {
+    // console.log('== send a request ==');
     axios({
       url,
       method,
