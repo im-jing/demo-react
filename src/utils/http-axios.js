@@ -3,6 +3,32 @@ import axios from 'axios';
 
 const accessToken = 'eyJraWQiOiJFRjRGMjJDMC01Q0IwLTQzNDgtOTY3Qi0wMjY0OTVFN0VGQzgiLCJhbGciOiJFUzI1NiJ9.eyJpc3MiOiJ3d2NoaW5hIiwiYXVkIjoid3djaGluYS1pb3MiLCJzdWIiOiIiLCJpYXQiOjE1NDY0MDA0NDMsImp0aSI6IjJiYzMyMWM2LWNhZGYtNDQyYS1iY2M5LWE1NzM1NTEyYjUxMyIsInVpZCI6LTF9.lT_kQ0Ctt6_UA_diBA7vxtN-HTcq5HrQer7Epb3QeW6_eC2-OsVQctqUZA0A-gjndNM6FWl8-581GDHdlEuxSg';
 
+// 根据状态码，统一处理接口异常
+export const checkStatus = (res) => {
+  // console.log(res, '==res==');
+  const statusCode = res.status;
+  let errMsg;
+  switch (statusCode) {
+    case 401:
+      console.log('not authorized');
+      errMsg = 'not authorized';
+      break;
+    case 404:
+      console.log('Request failed with status code 404');
+      errMsg = 'Request failed with status code 404';
+      break;
+    case 405:
+      console.log('token过期');
+      errMsg = 'token过期';
+      break;
+    default:
+      // console.log(res, '==res==');
+      errMsg = '未知错误';
+  }
+
+  return Promise.reject(errMsg);
+};
+
 // axios拦截器
 export const axiosApi = (url, method, type, params = {}) => {
   // console.log('==enter axiosApi fn==');
@@ -32,16 +58,19 @@ export const axiosApi = (url, method, type, params = {}) => {
   );
 
   return new Promise((resolve, reject) => {
-    // console.log('== send a request ==');
     axios({
       url,
       method,
       [data]: params,
       headers,
-    }).then(resolve)
+    })
+      .then((response) => {
+        console.log(resolve, '====success====');
+        resolve(response);
+      })
       .catch((error) => {
-        console.dir(error);
-        reject(error);
+        console.log(error, '===fail===');
+        checkStatus(error);
       });
   });
 };
