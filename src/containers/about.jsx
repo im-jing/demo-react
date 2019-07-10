@@ -12,6 +12,7 @@ class About extends Component {
     this.state = {
       update: false,
     };
+    this.sendRequest = null;
   }
 
   componentWillMount() {
@@ -20,10 +21,14 @@ class About extends Component {
     });
   }
 
-  componentDidMount() {
-    getReservations().then((res) => {
-      console.log(res, 'getReservations');
-    });
+  async componentDidMount() {
+    this.sendRequest = await getReservations();
+  }
+
+  componentWillUnmount() {
+    // abortFetching();
+    console.log('Fetch abort');
+    this.sendRequest.abort();
   }
 
   render() {

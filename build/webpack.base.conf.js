@@ -94,10 +94,12 @@ const configExports = {
       {
         test: /.(css|less)$/,
         use: [
+          'style-loader',
           {
             loader: MiniCssExtractPlugin.loader,
           },
           'css-loader',
+          'less-loader',
         ],
       }, {
         test: /\.(js|jsx)$/,

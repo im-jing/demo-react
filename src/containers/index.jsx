@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Loading from '../components/loading/index';
+import Header from '../components/header/index';
 import { Tabs, Tab } from '../components/tabs/index';
 
 import {
@@ -12,7 +13,7 @@ import {
   removeRole,
   // getReservations,
   // getFeedList,
-} from '../request/api-axios';
+} from '../request/api';
 
 const Section = styled.section`
   background: #f2f2f2;
@@ -40,6 +41,7 @@ class Home extends Component {
       roleList: [],
     };
     this.sendRequest = null;
+    this.roleListData = null;
   }
 
   // static getDerivedStateFromProps(props, state) {
@@ -47,13 +49,14 @@ class Home extends Component {
   // }
 
   async componentDidMount() {
+    this.distinct([1, 2, 2, 3]);
     this.sendRequest = await getLocations();
 
     const sum = this.plus(2, 5);
     this.setState({
       loading: false,
       sum,
-      list: this.sendRequest.data,
+      list: this.sendRequest,
     });
 
     this.getRoleListData();
@@ -62,8 +65,14 @@ class Home extends Component {
   componentWillUnmount() {
     // abortFetching();
     console.log('Fetch abort');
-    this.sendRequest.abort();
+    console.log(this.sendRequest, '====');
+    this.sendRequest.cancel();
+    this.roleListData.cancel();
   }
+
+  setStateAsync = nextState => new Promise((resolve) => {
+    this.setState(nextState, resolve);
+  })
 
   plus = (a, b) => a + b
 
@@ -79,11 +88,20 @@ class Home extends Component {
       page: 1,
       size: 10,
     };
-    const roleListData = await getRoleList(getRoleParams);
+    this.roleListData = await getRoleList(getRoleParams);
 
-    this.setState({
+    // setState是异步,第二个参数是state更新完毕的回调函数
+    // this.setState({
+    //   loading: false,
+    // }, () => {
+    //   this.setState({
+    //     roleList: this.roleListData.data.list,
+    //   });
+    // });
+
+    await this.setStateAsync({
       loading: false,
-      roleList: roleListData.data.data.list,
+      roleList: this.roleListData.data.list,
     });
   }
 
@@ -141,8 +159,21 @@ class Home extends Component {
       });
   }
 
+  distinct = (arr) => {
+    const res = [];
+
+    for (let i = 0; i < arr.length; i++) {
+      if (res.indexOf(arr[i]) === -1) {
+        res.push(arr[i]);
+      }
+    }
+    console.log(res);
+  }
+
   render() {
-    const { loading, sum, activeTabIdx } = this.state;
+    const {
+      loading, sum, activeTabIdx,
+    } = this.state;
 
     return (
       <React.Fragment>
@@ -150,6 +181,7 @@ class Home extends Component {
           ? <Loading />
           : (
             <div className="page-home">
+              <Header />
               <div>here is test 123.</div>
               <Section red>{sum}</Section>
               <Section>bbb</Section>
