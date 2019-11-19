@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { FormattedMessage } from 'react-intl';
 
 import Loading from '../components/loading/index';
 import Header from '../components/header/index';
@@ -15,6 +15,10 @@ import {
   // getFeedList,
 } from '../request/api';
 
+
+const WebSocketClient = require('websocket').client;
+const W3CWebSocket = require('websocket').w3cwebsocket;
+
 const Section = styled.section`
   background: #f2f2f2;
   border-bottom: 1px solid #999;
@@ -24,12 +28,6 @@ const Section2 = styled(Section)`
   border-color: black;
 `;
 class Home extends Component {
-  // static propTypes = {
-  //   history: PropTypes.shape({
-  //     pathname: PropTypes.string.isRequired,
-  //   }).isRequired,
-  // }
-
   constructor(props) {
     super(props);
 
@@ -42,13 +40,13 @@ class Home extends Component {
     };
     this.sendRequest = null;
     this.roleListData = null;
+    this.client = null;
   }
 
-  // static getDerivedStateFromProps(props, state) {
-  //   console.log('getDerivedStateFromProps')
-  // }
-
   async componentDidMount() {
+    // websocket
+    this.socketConnect();
+
     this.distinct([1, 2, 2, 3]);
     this.sendRequest = await getLocations();
 
@@ -75,11 +73,6 @@ class Home extends Component {
   })
 
   plus = (a, b) => a + b
-
-  switchToAbout = () => {
-    // const { history } = this.props;
-    // history.push('about');
-  }
 
   getRoleListData = async () => {
     // 测试发送post请求
@@ -159,6 +152,14 @@ class Home extends Component {
       });
   }
 
+  testClosures = () => {
+    for (let i = 1; i <= 5; i += 1) {
+      setTimeout((function (j) {
+        console.log(j);
+      }(i)), 0);
+    }
+  }
+
   distinct = (arr) => {
     const res = [];
 
@@ -168,6 +169,46 @@ class Home extends Component {
       }
     }
     console.log(res);
+  }
+
+  socketConnect = () => {
+    this.client = new W3CWebSocket('ws://localhost:8080/', 'echo-protocol');
+
+    this.client.onerror = this.wsOnError();
+
+    this.client.onopen = this.wsOnOpen();
+
+    this.client.onclose = this.wsOnClose();
+
+    this.client.onmessage = this.wsOnMessage();
+  }
+
+  wsOnError = () => {
+    console.log('Connection Error');
+  }
+
+  wsOnOpen = () => {
+    console.log('WebSocket Client Connected');
+    this.sendNumber();
+  }
+
+  sendNumber = () => {
+    if (this.client.readyState === this.client.OPEN) {
+      const number = Math.round(Math.random() * 0xFFFFFF);
+      this.client.send(number.toString());
+      setTimeout(this.sendNumber, 1000);
+    }
+  }
+
+  wsOnClose = () => {
+    console.log('echo-protocol Client Closed');
+  }
+
+  wsOnMessage = (e) => {
+    console.log(e, '===ee===');
+    if (typeof e.data === 'string') {
+      console.log(`Received: '${e.data}'`);
+    }
   }
 
   render() {
@@ -183,10 +224,10 @@ class Home extends Component {
             <div className="page-home">
               <Header />
               <div>here is test 123.</div>
+              <FormattedMessage id="intl.hello" />
               <Section red>{sum}</Section>
               <Section>bbb</Section>
               <Section2 red>ccc</Section2>
-              <Link to="/about">about link</Link>
               <Tabs activeTabIdx={activeTabIdx}>
                 <Tab name="Tab A">
                   <ul>{this.renderLocationList()}</ul>
