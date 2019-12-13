@@ -6,6 +6,8 @@ import Loading from '../components/loading/index';
 import Header from '../components/header/index';
 import { Tabs, Tab } from '../components/tabs/index';
 
+import TsDemo from '../ts-demo.ts';
+
 import {
   getLocations,
   getRoleList,
@@ -16,8 +18,8 @@ import {
 } from '../request/api';
 
 
-const WebSocketClient = require('websocket').client;
-const W3CWebSocket = require('websocket').w3cwebsocket;
+// const WebSocketClient = require('websocket').client;
+// const W3CWebSocket = require('websocket').w3cwebsocket;
 
 const Section = styled.section`
   background: #f2f2f2;
@@ -44,8 +46,11 @@ class Home extends Component {
   }
 
   async componentDidMount() {
+    console.log(TsDemo, '====');
+    console.log(TsDemo.arr1, '=arr1=');
+    console.log(TsDemo.arr2, '=arr2=');
     // websocket
-    this.socketConnect();
+    // this.socketConnect();
 
     this.distinct([1, 2, 2, 3]);
     this.sendRequest = await getLocations();
@@ -132,7 +137,7 @@ class Home extends Component {
         if (response.data.code === 0) {
           this.getRoleListData();
         } else {
-          alert(response.data.msg);
+          // alert(response.data.msg);
         }
       });
   }
@@ -147,23 +152,23 @@ class Home extends Component {
         if (response.data.code === 0) {
           this.getRoleListData();
         } else {
-          alert(response.data.msg);
+          // alert(response.data.msg);
         }
-      });
+      })
   }
 
   testClosures = () => {
-    for (let i = 1; i <= 5; i += 1) {
-      setTimeout((function (j) {
-        console.log(j);
-      }(i)), 0);
-    }
+    // for (let i = 1; i <= 5; i += 1) {
+    //   setTimeout((function (j) {
+    //     console.log(j);
+    //   }(i)), 0);
+    // }
   }
 
   distinct = (arr) => {
     const res = [];
 
-    for (let i = 0; i < arr.length; i++) {
+    for (let i = 0; i < arr.length; i += 1) {
       if (res.indexOf(arr[i]) === -1) {
         res.push(arr[i]);
       }
@@ -171,26 +176,26 @@ class Home extends Component {
     console.log(res);
   }
 
-  socketConnect = () => {
-    this.client = new W3CWebSocket('ws://localhost:8080/', 'echo-protocol');
+  // socketConnect = () => {
+  //   this.client = new W3CWebSocket('ws://localhost:8080/', 'echo-protocol');
 
-    this.client.onerror = this.wsOnError();
+  //   this.client.onerror = this.wsOnError();
 
-    this.client.onopen = this.wsOnOpen();
+  //   this.client.onopen = this.wsOnOpen();
 
-    this.client.onclose = this.wsOnClose();
+  //   this.client.onclose = this.wsOnClose();
 
-    this.client.onmessage = this.wsOnMessage();
-  }
+  //   this.client.onmessage = this.wsOnMessage();
+  // }
 
-  wsOnError = () => {
-    console.log('Connection Error');
-  }
+  // wsOnError = () => {
+  //   console.log('Connection Error');
+  // }
 
-  wsOnOpen = () => {
-    console.log('WebSocket Client Connected');
-    this.sendNumber();
-  }
+  // wsOnOpen = () => {
+  //   console.log('WebSocket Client Connected');
+  //   this.sendNumber();
+  // }
 
   sendNumber = () => {
     if (this.client.readyState === this.client.OPEN) {
@@ -200,16 +205,16 @@ class Home extends Component {
     }
   }
 
-  wsOnClose = () => {
-    console.log('echo-protocol Client Closed');
-  }
+  // wsOnClose = () => {
+  //   console.log('echo-protocol Client Closed');
+  // }
 
-  wsOnMessage = (e) => {
-    console.log(e, '===ee===');
-    if (typeof e.data === 'string') {
-      console.log(`Received: '${e.data}'`);
-    }
-  }
+  // wsOnMessage = (e) => {
+  //   console.log(e, '===ee===');
+  //   if (typeof e.data === 'string') {
+  //     console.log(`Received: '${e.data}'`);
+  //   }
+  // }
 
   render() {
     const {

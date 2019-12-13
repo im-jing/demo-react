@@ -81,7 +81,7 @@ const configExports = {
   },
 
   resolve: {
-    extensions: ['.js', '.jsx', '.less', '.css'], // 自动解析确定的扩展,能够使用户在引入模块时不带扩展名
+    extensions: ['.js', '.jsx', '.less', '.css', '.ts', '.tsx'], // 自动解析确定的扩展,能够使用户在引入模块时不带扩展名
     alias: {
       '@': path.resolve(__dirname, '../src'),
     },
@@ -134,6 +134,10 @@ const configExports = {
       }, {
         test: /\.json$/,
         loader: 'json-loader',
+        exclude: /node_modules/,
+      }, {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
         exclude: /node_modules/,
       },
     ],
